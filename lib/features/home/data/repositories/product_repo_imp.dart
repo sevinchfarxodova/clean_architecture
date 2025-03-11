@@ -8,7 +8,7 @@ class ProductRepositoryImpl implements ProductRepository {
   ProductRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<Product> oneProductInfo({required int id}) {
+  Future<Product> oneProductInfo({required String id}) {
     return remoteDataSource.oneProductInfo(id: id);
   }
 }

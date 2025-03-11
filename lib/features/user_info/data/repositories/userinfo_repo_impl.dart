@@ -8,7 +8,7 @@ class UserRepositoryImpl implements UserRepository {
   UserRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<UserModel> getUserInfo(String accessToken) {
+  Future<UserModel> getUserInfo({ required String accessToken}) {
     return remoteDataSource.getUserInfo(accessToken);
   }
 }

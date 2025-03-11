@@ -2,26 +2,16 @@ import '../../domain/entities/user.dart';
 
 class UserModel extends User {
   UserModel({
-    required int id,
-    required String username,
-    required String email,
-    required String firstName,
-    required String lastName,
-    required String gender,
-    required String image,
-    required String accessToken,
-    required String refreshToken,
-  }) : super(
-    id: id,
-    username: username,
-    email: email,
-    firstName: firstName,
-    lastName: lastName,
-    gender: gender,
-    image: image,
-    accessToken: accessToken,
-    refreshToken: refreshToken,
-  );
+    required super.id,
+    required super.username,
+    required super.email,
+    required super.firstName,
+    required super.lastName,
+    required super.gender,
+    required super.image,
+    required super.accessToken,
+    required super.refreshToken,
+  });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
@@ -50,5 +40,4 @@ class UserModel extends User {
       'refreshToken': refreshToken,
     };
   }
-
 }

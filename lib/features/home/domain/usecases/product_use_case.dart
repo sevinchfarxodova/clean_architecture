@@ -6,7 +6,7 @@ class ProductUseCase{
 
   ProductUseCase(this.repository);
 
-  Future<Product>call({required int id}){
+  Future<Product>call({required String id}){
     return repository.oneProductInfo(id: id);
   }
 }

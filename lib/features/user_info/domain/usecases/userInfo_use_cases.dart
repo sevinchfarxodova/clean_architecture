@@ -7,7 +7,7 @@ class UserinfoUseCases {
 
   UserinfoUseCases(this.repository);
 
-  Future<User>call(String accessToken){
-    return repository.getUserInfo( accessToken);
+  Future<User>call({required String accessToken}){
+    return repository.getUserInfo(accessToken: accessToken);
   }
 }
