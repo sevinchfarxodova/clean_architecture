@@ -1,4 +1,4 @@
-import 'package:clean_architecture/features/all_product/presentation/pages/all_products.dart';
+import 'package:clean_architecture/features/home/presentation/pages/all_products.dart';
 import 'package:clean_architecture/features/auth/data/models/user_model.dart';
 import 'package:clean_architecture/features/auth/presentation/riverpod/auth_state.dart';
 import 'package:clean_architecture/features/user_info/presentation/providers/user_provider.dart';
@@ -77,7 +77,7 @@ class _UserInfoPageState extends ConsumerState<UserInfoPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => OneProductInfo(),
+                      builder: (context) => OneProductInfo(productId: '',),
                     ),
                   );
                 },

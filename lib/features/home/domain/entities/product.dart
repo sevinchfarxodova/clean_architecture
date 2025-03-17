@@ -1,4 +1,3 @@
-
 class Product {
   final int id;
   final String title;
@@ -9,15 +8,18 @@ class Product {
   final double rating;
   final int stock;
   final List<String> tags;
+  final String brand;
   final String sku;
-  final double weight;
+  final int weight;
+  final Dimensions dimensions;
   final String warrantyInformation;
   final String shippingInformation;
   final String availabilityStatus;
+  final List<Review> reviews;
   final String returnPolicy;
-  final int minimumOrderQuantity;
-  final String thumbnail;
+  final Meta meta;
   final List<String> images;
+  final String thumbnail;
 
   Product({
     required this.id,
@@ -29,14 +31,59 @@ class Product {
     required this.rating,
     required this.stock,
     required this.tags,
+    required this.brand,
     required this.sku,
     required this.weight,
+    required this.dimensions,
     required this.warrantyInformation,
     required this.shippingInformation,
     required this.availabilityStatus,
+    required this.reviews,
     required this.returnPolicy,
-    required this.minimumOrderQuantity,
-    required this.thumbnail,
+    required this.meta,
     required this.images,
+    required this.thumbnail,
+  });
+}
+
+class Dimensions {
+  //final double width;
+  //final double height;
+  final double depth;
+
+  Dimensions({
+    //required this.width,
+    //required this.height,
+    required this.depth,
+  });
+}
+
+class Review {
+  final int rating;
+  final String comment;
+  final DateTime date;
+  final String reviewerName;
+  final String reviewerEmail;
+
+  Review({
+    required this.rating,
+    required this.comment,
+    required this.date,
+    required this.reviewerName,
+    required this.reviewerEmail,
+  });
+}
+
+class Meta {
+  final String createdAt;
+  final String updatedAt;
+  final String barcode;
+  final String qrCode;
+
+  Meta({
+    required this.createdAt,
+    required this.updatedAt,
+    required this.barcode,
+    required this.qrCode,
   });
 }

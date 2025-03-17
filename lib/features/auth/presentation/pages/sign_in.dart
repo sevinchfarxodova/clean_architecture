@@ -19,12 +19,12 @@ class _SignInState extends ConsumerState<SignIn> {
     final password = passwordController.text.trim();
     if (username.isNotEmpty && password.isNotEmpty) {
       ref.read(authNotifierProvider.notifier).signIn(username, password);
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => UserInfoPage(),
-      //   ),
-      // );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => UserInfoPage(),
+        ),
+      );
     }
 
   }

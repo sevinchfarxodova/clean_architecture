@@ -1,87 +1,42 @@
-// import 'package:flutter/cupertino.dart';
-// import 'package:flutter/material.dart';
-//
-// class OneProductInfo extends StatelessWidget {
-//   const OneProductInfo({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: const Text('One Product info')),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Container(
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.center,
-//             children: [
-//            //   Image.network(product!.thumbnail, height: 200, width: 200),
-//               SizedBox(height: 10),
-//               Text("",
-//                // product!.title,
-//                 style: TextStyle(
-//                   fontSize: 20,
-//                   fontWeight: FontWeight.bold,
-//                 ),
-//               ),
-//               SizedBox(height: 10),
-//         //      Text(product!.description, style: TextStyle(fontSize: 16)),
-//               SizedBox(height: 10),
-//               Text("",
-//              //   'Price: \$${product!.price}',
-//                 style: TextStyle(fontSize: 16, color: Colors.black),
-//               ),
-//               SizedBox(height: 10),
-//               Text("",
-//                 //'Rating: ${product!.rating}',
-//                 style:  TextStyle(fontSize: 16),
-//               ),
-//               Text(
-//                "",
-//                 //'Rating: ${product!.description}',
-//                 style:  TextStyle(fontSize: 16),
-//               ),
-//             ],
-//           ),
-//         ),
-//       )
-//     );
-//   }
-// }
-
 import 'package:clean_architecture/features/home/presentation/providers/one_product_provider.dart';
-import 'package:clean_architecture/features/home/presentation/providers/one_product_state.dart';
+import 'package:clean_architecture/features/home/presentation/providers/single_product/one_product_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../widgets/one_product_widget.dart';
-
 class OneProductInfo extends ConsumerStatefulWidget {
-  const OneProductInfo({super.key});
+  final String productId;
+
+  const OneProductInfo({super.key, required this.productId});
 
   @override
   ConsumerState createState() => _OneProductInfoState();
 }
 
 class _OneProductInfoState extends ConsumerState<OneProductInfo> {
-  final TextEditingController idController = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
 
-  void _oneProduct() {
-    final id = idController.text.trim();
-    if (id.isNotEmpty) {
-      ref.read(oneProductNotifierProvider.notifier).oneProduct(id);
-    }
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(oneProductNotifierProvider.notifier)
+          .oneProduct(widget.productId);
+    });
   }
 
+  void updateProduct({required int id, required String newTitle}) {
+    ref.watch(oneProductNotifierProvider.notifier).updateProduct(id, newTitle);
+  }
 
   @override
   Widget build(BuildContext context) {
     final oneProductState = ref.watch(oneProductNotifierProvider);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orange,
-        title: Text(
-          "One product",
+        title: const Text(
+          "One Product",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -92,18 +47,85 @@ class _OneProductInfoState extends ConsumerState<OneProductInfo> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             TextField(
-              controller: idController,
-              decoration: InputDecoration(labelText: "Enter number"),
+              controller: titleController,
+              decoration: InputDecoration(labelText: "Change title.."),
             ),
-            SizedBox(height: 20),
-            ElevatedButton(onPressed: _oneProduct, child: Text('One Product info '), ),
-            SizedBox(height: 20),
-            if (oneProductState is OneProductLoading) CircularProgressIndicator(),
-            if (oneProductState is OneProductError)
-              Text(oneProductState.message, style: TextStyle(color: Colors.red)),
-            if (oneProductState is OneProductSuccess)
-              OneProductWidget(product: oneProductState.product,)
+            IconButton(
+              onPressed: () {
+                if (oneProductState is OneProductSuccess) {
+                  updateProduct(
+                    id: oneProductState.product.id,
+                    newTitle: titleController.text.trim(),
+                  );
+                }
+              },
+              icon: Icon(Icons.update),
+            ),
 
+            if (oneProductState is OneProductLoading)
+              const Center(child: CircularProgressIndicator()),
+            if (oneProductState is OneProductError)
+              Text(
+                oneProductState.message,
+                style: const TextStyle(color: Colors.red),
+              ),
+            if (oneProductState is OneProductSuccess)
+              Expanded(
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.network(
+                          oneProductState.product.thumbnail,
+                          height: 200,
+                          width: 200,
+                        ),
+                        Text(
+                          oneProductState.product.title,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          oneProductState.product.description,
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Rating description: ${oneProductState.product.description}',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        Text(
+                          'Rating: ${oneProductState.product.rating}',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Price: \$${oneProductState.product.price}',
+                          style: TextStyle(fontSize: 18, color: Colors.green),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Rating: ${oneProductState.product.tags}',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        Text(
+                          'Rating: ${oneProductState.product.warrantyInformation}',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        Text(
+                          'Weight: ${oneProductState.product.weight}',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),
