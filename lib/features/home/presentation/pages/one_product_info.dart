@@ -48,18 +48,23 @@ class _OneProductInfoState extends ConsumerState<OneProductInfo> {
           children: [
             TextField(
               controller: titleController,
-              decoration: InputDecoration(labelText: "Change title.."),
-            ),
-            IconButton(
-              onPressed: () {
-                if (oneProductState is OneProductSuccess) {
-                  updateProduct(
-                    id: oneProductState.product.id,
-                    newTitle: titleController.text.trim(),
-                  );
-                }
-              },
-              icon: Icon(Icons.update),
+              decoration: InputDecoration(
+                labelText: "Change title..",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(60),
+                ),
+                prefixIcon: IconButton(
+                  onPressed: () {
+                    if (oneProductState is OneProductSuccess) {
+                      updateProduct(
+                        id: oneProductState.product.id!,
+                        newTitle: titleController.text.trim(),
+                      );
+                    }
+                  },
+                  icon: Icon(Icons.update, color: Colors.orange, size: 28),
+                ),
+              ),
             ),
 
             if (oneProductState is OneProductLoading)

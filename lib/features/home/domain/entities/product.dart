@@ -1,5 +1,5 @@
 class Product {
-  final int id;
+  int? id;
   final String title;
   final String description;
   final String category;
@@ -22,7 +22,7 @@ class Product {
   final String thumbnail;
 
   Product({
-    required this.id,
+    this.id,
     required this.title,
     required this.description,
     required this.category,

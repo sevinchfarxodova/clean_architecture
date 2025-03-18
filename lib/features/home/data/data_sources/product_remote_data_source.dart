@@ -1,9 +1,7 @@
 import 'package:clean_architecture/features/home/data/models/categories_models.dart';
 import 'package:clean_architecture/features/home/domain/entities/all_product.dart';
-import 'package:clean_architecture/features/home/domain/entities/categories.dart';
 import 'package:dio/dio.dart';
 import '../../domain/entities/product.dart';
-import '../../presentation/pages/all_products.dart';
 import '../models/all_product_model.dart';
 import '../models/product_model.dart';
 
@@ -24,6 +22,12 @@ abstract class ProductRemoteDataSource {
   Future<AllProduct> getProductsByCategory({required String url});
 
   Future<Product> updateProduct({required int id, required String newTitle});
+
+  Future<ProductModel> addProduct({required ProductModel productModel});
+
+  Future<ProductModel> deleteProductInfo({required String id});
+
+
 }
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
@@ -119,6 +123,36 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
       return ProductModel.fromJson(response.data);
     } else {
       throw Exception("Failed to get update product");
+    }
+  }
+
+  @override
+  Future<ProductModel> addProduct({required ProductModel productModel}) async {
+    final response = await dio.post(
+      'https://dummyjson.com/products/add',
+      data: productModel.toJson(),
+      options: Options(
+        headers: {'Content-Type': 'application/json'},
+      ),
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return ProductModel.fromJson(response.data);
+    } else {
+      throw Exception('Failed to add product');
+    }
+  }
+
+  @override
+  Future<ProductModel> deleteProductInfo({required String id})async {
+    final response = await dio.get('https://dummyjson.com/products/$id',
+      options: Options(
+        headers: {'Content-Type': 'application/json'},
+      ),
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return ProductModel.fromJson(response.data);
+    } else {
+      throw Exception('Failed to add product');
     }
   }
 }

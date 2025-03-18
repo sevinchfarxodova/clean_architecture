@@ -1,3 +1,4 @@
+import 'package:clean_architecture/features/carts/presentation/pages/carts_page.dart';
 import 'package:clean_architecture/features/home/presentation/pages/all_products.dart';
 import 'package:clean_architecture/features/auth/data/models/user_model.dart';
 import 'package:clean_architecture/features/auth/presentation/riverpod/auth_state.dart';
@@ -67,7 +68,7 @@ class _UserInfoPageState extends ConsumerState<UserInfoPage> {
                     "Email: ${userState.user.email}",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  Image.network(userState.user.image)
+                  Image.network(userState.user.image),
                 ],
               ),
             SizedBox(height: 20),
@@ -77,29 +78,36 @@ class _UserInfoPageState extends ConsumerState<UserInfoPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => OneProductInfo(productId: '',),
+                      builder: (context) => OneProductInfo(productId: ''),
                     ),
                   );
                 },
                 child: Text("One product"),
               ),
             ),
+            SizedBox(height: 8),
             Center(
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => AllProducts(),
-                    ),
+                    MaterialPageRoute(builder: (context) => AllProducts()),
                   );
                 },
-                child: Text("All product"),
+                child: Text("All products"),
               ),
             ),
+            ElevatedButton(onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CartsPage(),
+                ),
+              );
+            }, child: Text("carts")),
             SizedBox(height: 20),
             if (userState is UserLoading) CircularProgressIndicator(),
-            if (userState is UserError) Text("${userState.message}"),
+            if (userState is UserError) Text(userState.message),
           ],
         ),
       ),

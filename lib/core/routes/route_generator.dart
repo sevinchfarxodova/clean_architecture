@@ -1,8 +1,13 @@
 import 'package:clean_architecture/core/routes/route_names.dart';
 import 'package:clean_architecture/features/auth/presentation/pages/sign_in.dart';
+import 'package:clean_architecture/features/carts/domain/entities/cart._product.dart';
+import 'package:clean_architecture/features/carts/presentation/pages/cart_product_page.dart';
+import 'package:clean_architecture/features/carts/presentation/pages/carts_page.dart';
+import 'package:clean_architecture/features/carts/presentation/pages/one_cart_info.dart';
+import 'package:clean_architecture/features/home/presentation/pages/add_product.dart';
 import 'package:clean_architecture/features/home/presentation/pages/categories_page.dart';
+import 'package:clean_architecture/features/home/presentation/pages/delete_page.dart';
 import 'package:clean_architecture/features/home/presentation/pages/one_product_info.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../features/home/presentation/pages/product_by_category.dart';
 
@@ -31,6 +36,24 @@ class AppRoute {
           builder: (context) => OneProductInfo(productId: productId),
         );
 
+      case RouteNames.oneCartPage:
+        final cartId = routeSettings.arguments as String;
+        return MaterialPageRoute(
+          builder: (context) => OneCartInfo(cartId: cartId,),
+        );
+
+      case RouteNames.addProductPage:
+        return MaterialPageRoute(builder: (_) => AddProduct());
+
+      case RouteNames.allCartPage:
+        return MaterialPageRoute(builder: (_) => CartsPage());
+
+      case RouteNames.cartProductPage:
+        final products = routeSettings.arguments as List<ProductCart>;
+        return MaterialPageRoute(builder: (_) => CartProductPage(products: products));
+
+      case RouteNames.deletePage:
+        return MaterialPageRoute(builder: (_) => DeletePage());
       default:
         return _errorRoute();
     }

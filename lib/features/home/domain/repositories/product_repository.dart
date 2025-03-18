@@ -1,5 +1,7 @@
 import 'package:clean_architecture/features/home/domain/entities/categories.dart';
-
+import '../../../carts/data/models/all_cart_model.dart';
+import '../../../carts/data/models/product_model.dart';
+import '../../data/models/product_model.dart';
 import '../entities/all_product.dart';
 import '../entities/product.dart';
 
@@ -20,6 +22,10 @@ abstract class ProductRepository {
   Future<AllProduct> getProductsByCategory({required String url});
 
   Future<Product> updateProduct({required int id, required String newTitle});
+
+  Future<ProductModel> addProduct({required ProductModel productModel});
+
+  Future<Product> deleteProductInfo({required String id});
 
 
 }
