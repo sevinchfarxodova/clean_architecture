@@ -1,5 +1,4 @@
 import 'package:clean_architecture/features/user_info/domain/repositories/user_repositories.dart';
-
 import '../../../auth/domain/entities/user.dart';
 
 class UserinfoUseCases {

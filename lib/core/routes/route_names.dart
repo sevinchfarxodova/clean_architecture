@@ -8,4 +8,6 @@ abstract class RouteNames {
   static const String oneCartPage = '/allCartPage';
   static const String deletePage = '/deletePage';
   static const String cartProductPage = '/cartProductPage';
+  static const String addCartPage = '/addCartPage';
+  static const String deleteCartPage = '/deleteCartPage';
 }

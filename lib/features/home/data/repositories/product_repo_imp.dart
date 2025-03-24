@@ -1,12 +1,9 @@
-import 'package:clean_architecture/features/carts/data/models/all_cart_model.dart';
 import 'package:clean_architecture/features/home/data/data_sources/product_remote_data_source.dart';
 import 'package:clean_architecture/features/home/data/models/product_model.dart';
 import 'package:clean_architecture/features/home/domain/entities/all_product.dart';
 import 'package:clean_architecture/features/home/domain/entities/categories.dart';
 import 'package:clean_architecture/features/home/domain/entities/product.dart';
 import 'package:clean_architecture/features/home/domain/repositories/product_repository.dart';
-
-import '../../../carts/data/models/product_model.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
   final ProductRemoteDataSource remoteDataSource;

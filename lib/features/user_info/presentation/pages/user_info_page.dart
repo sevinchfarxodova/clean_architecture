@@ -74,6 +74,10 @@ class _UserInfoPageState extends ConsumerState<UserInfoPage> {
             SizedBox(height: 20),
             Center(
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange,
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                ),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -82,29 +86,57 @@ class _UserInfoPageState extends ConsumerState<UserInfoPage> {
                     ),
                   );
                 },
-                child: Text("One product"),
+                child: Text("One product", style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),),
               ),
             ),
             SizedBox(height: 8),
             Center(
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange,
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                ),
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => AllProducts()),
                   );
                 },
-                child: Text("All products"),
+                child: Text("All products", style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),),
               ),
             ),
-            ElevatedButton(onPressed: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CartsPage(),
+            SizedBox(height: 8),
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange,
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 ),
-              );
-            }, child: Text("carts")),
+                onPressed: () {
+                  Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => CartsPage(),
+                    ),
+                  );
+                },
+                child: Text(
+                  " View Carts",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              )
+
+            ),
             SizedBox(height: 20),
             if (userState is UserLoading) CircularProgressIndicator(),
             if (userState is UserError) Text(userState.message),

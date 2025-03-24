@@ -1,6 +1,7 @@
 import 'package:clean_architecture/core/routes/route_names.dart';
 import 'package:clean_architecture/features/auth/presentation/pages/sign_in.dart';
 import 'package:clean_architecture/features/carts/domain/entities/cart._product.dart';
+import 'package:clean_architecture/features/carts/presentation/pages/add_cart_page.dart';
 import 'package:clean_architecture/features/carts/presentation/pages/cart_product_page.dart';
 import 'package:clean_architecture/features/carts/presentation/pages/carts_page.dart';
 import 'package:clean_architecture/features/carts/presentation/pages/one_cart_info.dart';
@@ -37,13 +38,21 @@ class AppRoute {
         );
 
       case RouteNames.oneCartPage:
-        final cartId = routeSettings.arguments as String;
+        final args = routeSettings.arguments as Map<String, dynamic>;
+        final cartId = args['cartId'] as String;
+        final products = args['products'] as List<ProductCart>;
+
         return MaterialPageRoute(
-          builder: (context) => OneCartInfo(cartId: cartId,),
+          builder: (context) => OneCartInfo(cartId: cartId, products: products),
         );
+
 
       case RouteNames.addProductPage:
         return MaterialPageRoute(builder: (_) => AddProduct());
+
+
+      case RouteNames.addCartPage:
+        return MaterialPageRoute(builder: (_) => AddCartPage());
 
       case RouteNames.allCartPage:
         return MaterialPageRoute(builder: (_) => CartsPage());
@@ -54,6 +63,7 @@ class AppRoute {
 
       case RouteNames.deletePage:
         return MaterialPageRoute(builder: (_) => DeletePage());
+
       default:
         return _errorRoute();
     }

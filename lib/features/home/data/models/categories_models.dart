@@ -14,8 +14,8 @@ class CategoryModel extends Category {
   );
 
   Map<String, dynamic> toJson() => {
-    "slug": slug ?? "",
-    "name": name ?? "",
-    "url": url ?? "",
+    "slug": slug  ,
+    "name": name ,
+    "url": url ,
   };
 }
