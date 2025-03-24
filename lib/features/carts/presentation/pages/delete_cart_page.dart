@@ -13,8 +13,15 @@ class DeleteCartPage extends ConsumerStatefulWidget {
 class _DeleteCartPageState extends ConsumerState<DeleteCartPage> {
   TextEditingController deleteController = TextEditingController();
 
-  void deleteCart({required String id}) {
-    ref.read(deleteCartNotifierProvider.notifier).deleteCart(id);
+  void deleteCart() {
+    final id = deleteController.text.trim();
+    if (id.isNotEmpty) {
+      ref.read(deleteCartNotifierProvider.notifier).deleteCart(id);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please enter a valid Product ID")),
+      );
+    }
   }
 
   @override
@@ -32,18 +39,20 @@ class _DeleteCartPageState extends ConsumerState<DeleteCartPage> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             TextField(
               decoration: InputDecoration(
                 labelText: "Product ID to delete",
-                suffixIcon: ElevatedButton(
-                  onPressed: () {},
-                  child: Icon(Icons.delete, color: Colors.redAccent, size: 26),
-                ),
               ),
               controller: deleteController,
               keyboardType: TextInputType.number,
             ),
+            IconButton(
+              onPressed: deleteCart,
+              icon: Icon(Icons.delete, color: Colors.redAccent, size: 26),
+            ),
+
             if (deleteCartState is DeleteCartLoading)
               Center(child: CircularProgressIndicator()),
               if(deleteCartState is DeleteCartSuccess)
@@ -54,16 +63,17 @@ class _DeleteCartPageState extends ConsumerState<DeleteCartPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Image.network(
-                            deleteCartState.productCart.thumbnail,
-                            height: 200,
-                            width: 200,
-                          ),
+                          // Image.network(
+                          //   deleteCartState.productCart.thumbnail,
+                          //   height: 200,
+                          //   width: 200,
+                          // ),
                           Text(
                             deleteCartState.productCart.title,
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
+                                color: Colors.black
                             ),
                           ),
                           SizedBox(height: 10),
@@ -71,7 +81,14 @@ class _DeleteCartPageState extends ConsumerState<DeleteCartPage> {
                             'Price: \$${deleteCartState.productCart.price.toString()}',
                             style: TextStyle(fontSize: 18, color: Colors.green),
                           ),
-                          SizedBox(height: 10),
+                          Text(
+                            'Quantity: \$${deleteCartState.productCart.quantity.toString()}',
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
+                          Text(
+                            'Total: \$${deleteCartState.productCart.total.toString()}',
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
                         ],
                       ),
                     ),

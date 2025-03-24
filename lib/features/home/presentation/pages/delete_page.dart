@@ -24,7 +24,7 @@ class _DeletePageState extends ConsumerState<DeletePage> {
       appBar: AppBar(
         backgroundColor: Colors.orange,
         title: const Text(
-          "Add Product",
+          "Delete Product",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,

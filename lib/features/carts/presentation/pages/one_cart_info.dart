@@ -8,7 +8,7 @@ class OneCartInfo extends ConsumerStatefulWidget {
   final List<ProductCart> products;
   final String cartId;
 
-  const OneCartInfo({super.key, required this.cartId, required this.products});
+   OneCartInfo({super.key, required this.cartId, required this.products});
 
   @override
   ConsumerState createState() => _OneCartInfoState();
@@ -26,13 +26,15 @@ class _OneCartInfoState extends ConsumerState<OneCartInfo> {
     });
   }
 
-  void getOneCart({required String id}){
+  void getOneCart({required String id}) {
     ref.read(oneCartNotifierProvider.notifier).oneCartData(id);
   }
 
-  void updateCart({required int id, required int quantity}){
-    ref.watch(oneCartNotifierProvider.notifier).updateCart(id, quantity);
+  void updateCart({required int id, required int quantity}) {
+    ref.read(oneCartNotifierProvider.notifier).updateCart(id, quantity);
+
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -54,31 +56,40 @@ class _OneCartInfoState extends ConsumerState<OneCartInfo> {
               controller: idController,
               decoration: InputDecoration(labelText: "Enter id"),
             ),
-
+            IconButton(
+              onPressed: () {
+                getOneCart(id: idController.text.trim());
+              },
+              icon: Icon(Icons.get_app),
+            ),
+            SizedBox(height: 16),
             TextField(
               controller: quantityController,
               decoration: InputDecoration(
-                labelText: "Change quantity..",
+                labelText: "Update quantity..",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(60),
                 ),
-                prefixIcon: IconButton(
-                  onPressed: () {
-                    if (oneCartState is OneCartSuccess) {
-                      updateCart(
-                        id: oneCartState.productCart.id!,
-                        quantity: int.parse(quantityController.text.trim()),
-                      );
-                    }
-                  },
-                  icon: Icon(Icons.update, color: Colors.purpleAccent, size: 28),
-                ),
               ),
             ),
+          IconButton(
+            onPressed: () {
+              if (oneCartState is OneCartSuccess) {
+                if (quantityController.text.trim().isNotEmpty) {
+                  final quantity = int.tryParse(quantityController.text.trim());
+                  if (quantity != null && quantity > 0) {
+                    updateCart(id: oneCartState.productCart.id!, quantity: quantity);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Enter a valid quantity!")),
+                    );
+                  }
+                }
+              }
+            },
+            icon: Icon(Icons.update, color: Colors.purpleAccent, size: 28),
+          ),
 
-            IconButton(onPressed: () {
-              getOneCart(id: idController.text.trim());
-            }, icon: Icon(Icons.get_app)),
             if (oneCartState is OneCartLoading) CircularProgressIndicator(),
             if (oneCartState is OneCartError) Text(oneCartState.message),
             if (oneCartState is OneCartSuccess)

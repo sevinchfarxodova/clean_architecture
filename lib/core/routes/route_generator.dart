@@ -4,6 +4,7 @@ import 'package:clean_architecture/features/carts/domain/entities/cart._product.
 import 'package:clean_architecture/features/carts/presentation/pages/add_cart_page.dart';
 import 'package:clean_architecture/features/carts/presentation/pages/cart_product_page.dart';
 import 'package:clean_architecture/features/carts/presentation/pages/carts_page.dart';
+import 'package:clean_architecture/features/carts/presentation/pages/delete_cart_page.dart';
 import 'package:clean_architecture/features/carts/presentation/pages/one_cart_info.dart';
 import 'package:clean_architecture/features/home/presentation/pages/add_product.dart';
 import 'package:clean_architecture/features/home/presentation/pages/categories_page.dart';
@@ -63,6 +64,10 @@ class AppRoute {
 
       case RouteNames.deletePage:
         return MaterialPageRoute(builder: (_) => DeletePage());
+
+
+      case RouteNames.deleteCartPage:
+        return MaterialPageRoute(builder: (_) => DeleteCartPage());
 
       default:
         return _errorRoute();
